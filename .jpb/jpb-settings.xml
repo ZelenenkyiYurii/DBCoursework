@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ReverseEngineeringSettings">
+    <database-infos>
+      <database-info dbms-id="postgres">
+        <mapping-types>
+          <mapping-type sql-type="course_type_enum" java-class="java.lang.String" use-column-definition="true" />
+          <mapping-type sql-type="group_status_enum" java-class="java.lang.String" use-column-definition="true" />
+          <mapping-type sql-type="exam_result_enum" java-class="java.lang.String" use-column-definition="true" />
+          <mapping-type sql-type="payment_type_enum" java-class="java.lang.String" use-column-definition="true" />
+          <mapping-type sql-type="enrollment_status_enum" java-class="java.lang.String" use-column-definition="true" />
+        </mapping-types>
+      </database-info>
+    </database-infos>
+  </component>
+</project>

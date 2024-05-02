@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Payment</title>
+    <link rel="stylesheet" href="/new_edit_login.css">
+</head>
+<body>
+<form th:method="POST" th:action="@{/enrollments/pays/{id}(id=${enrollment.getId()})}" th:object="${payment}">
+    <select hidden th:field="*{enrollment}">
+        <option th:value="${enrollment}"></option>
+    </select>
+    <input hidden th:field="*{amount}" th:value="${price}" th:name="price">
+    <input type="submit" value="Pay"/>
+</form>
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/styles2.css">
+</head>
+<body>
+  <H2 th:text="${student.get().getFirstName()+' '+student.get().getLastName()}"></H2>
+  <a th:href="@{/enrollments/new/{id}(id=${student.get().getId()})}"> Join new course</a>
+  <br>
+  <h3>My courses:</h3>
+  <h4 th:each="enrollment:${student.get().getEnrollments()}" th:text="${enrollment.getCourse().getCourseName()}"></h4>
+  </b>
+  <form th:method="get" th:action="@{/student_page/new_lesson}">
+      <label>Practical course</label>
+      <br>
+      <select th:name="enrollment" >
+          <option th:text="${enrollment.getCourse().getCourseName()}"
+                   th:value="${enrollment.id}"
+                  th:if="${enrollment.getCourse().getCourseType()=='practical'}"
+                  th:each="enrollment:${student.get().getEnrollments()}"></option>
+      </select>
+      <br>
+      <label>Date new lesson</label>
+      <br>
+
+      <input type="datetime-local" th:name="date">
+      <br>
+      <input type="submit">
+  </form>
+
+  <div th:if="!${#lists.isEmpty(practicals)}">
+  <h2>Practical lessons</h2>
+
+  <table >
+      <thead>
+      <tr>
+          <th>ID</th>
+          <th>Instructor</th>
+          <th>Car</th>
+          <th>Date and time</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="practical : ${practicals}">
+          <td th:text="${practical.getId()}"></td>
+          <td th:text="${practical.getInstructor().getFirstName()+' '+practical.getInstructor().getLastName()}"></td>
+          <td th:text="${practical.getCar().getBrand()+' '+practical.getCar().getModel()}"></td>
+          <td th:text="${practical.getStartDate()}"></td>
+
+      </tr>
+      </tbody>
+  </table>
+  </b>
+  </div>
+
+  <div th:if="!${#lists.isEmpty(theoreticals)}">
+  <h2>Theoretical lessons</h2>
+  <table >
+      <thead>
+      <tr>
+          <th>ID</th>
+          <th>Instructor</th>
+          <th>Course</th>
+          <th>Date and time</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="theoretical : ${theoreticals}">
+          <td th:text="${theoretical.getId()}"></td>
+          <td th:text="${theoretical.getInstructor().getFirstName()+' '+theoretical.getInstructor().getLastName()}"></td>
+          <td th:text="${theoretical.getGroup().getCourse().getCourseName()}"></td>
+          <td th:text="${theoretical.getStartDate()}"></td>
+
+      </tr>
+      </tbody>
+  </table>
+  </div>
+</body>
+</html>

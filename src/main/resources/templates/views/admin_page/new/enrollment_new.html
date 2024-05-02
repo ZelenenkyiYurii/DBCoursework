@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>New Person</title>
+    <link rel="stylesheet" href="/new_edit_login.css">
+</head>
+<body>
+<form th:method="POST" th:action="@{/enrollments/new}" th:object="${enrollment}">
+    <label for="cars"> Courses</label>
+    <select id="cars" th:field="*{course}">
+        <option th:each="course:${courses}" th:text="${course.getCourseName()}" th:value="${course.id}"></option>
+    </select>
+    <select hidden th:field="*{student}">
+        <option th:value="${student.getId()}"></option>
+    </select>
+    <input th:type="date"  th:field="*{enrollmentDate}" th:value="${enrollment.enrollmentDate}">
+<!--    <input hidden th:name="student" th:field="*{student}" th:value="${student.id}" >-->
+<!--    <input hidden th:field="*{status}" th:value="${enrollment.status}">-->
+    <input type="submit" value="Create"/>
+</form>
+</body>
+</html>

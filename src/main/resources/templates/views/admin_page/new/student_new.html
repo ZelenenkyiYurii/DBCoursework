@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>New Person</title>
+    <link rel="stylesheet" href="/new_edit_login.css">
+</head>
+<body>
+<form th:method="POST" th:action="@{/students}" th:object="${student}">
+    <label for="first_name"> First name: </label>
+    <input type="text" th:field="*{firstName}" id="first_name">
+    <div style="color: darkred" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">Name Error</div>
+    <br>
+    <label for="last_name"> Last name: </label>
+    <input type="text" th:field="*{lastName}" id="last_name">
+    <div style="color: darkred" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">Name Error</div>
+    <br>
+    <label for="email"> Email: </label>
+    <input type="text" th:field="*{email}" id="email">
+    <div style="color: darkred" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Name Error</div>
+    <br>
+    <label for="phone"> Phone: </label>
+    <input type="text" th:field="*{phoneNumber}" id="phone">
+    <div style="color: darkred" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}">Name Error</div>
+    <br>
+    <label for="date"> Date: </label>
+    <input type="date" th:field="*{dateOfBirth}" id="date">
+    <div style="color: darkred" th:if="${#fields.hasErrors('dateOfBirth')}" th:errors="*{dateOfBirth}">Name Error</div>
+    <br>
+
+    <div>
+        <label>Courses:
+            <input type="checkbox" name="courses"
+                   th:each="course : ${courses}"
+                   th:text="${course.courseName}"
+                   th:value="${course.id}"
+                   th:field="*{courses}"
+            />
+        </label>
+    </div>
+<!--    <div>-->
+<!--        <table>-->
+<!--            <thead>-->
+<!--            <tr>-->
+<!--                <th>Категорія</th>-->
+<!--                <th>Теоретичний</th>-->
+<!--                <th>Практичний</th>-->
+<!--            </tr>-->
+<!--            </thead>-->
+<!--            <tbody>-->
+<!--            &lt;!&ndash; Перебір списку курсів та відображення їх у таблиці &ndash;&gt;-->
+<!--            <tr th:each="course : ${courses}">-->
+<!--                <td th:text="${course.getCategory().getCategoryName()}">Назва курсу</td>-->
+<!--                <td th:text="${course.description}">Опис курсу</td>-->
+<!--                <td type="checkbox"></td>-->
+<!--            </tr>-->
+<!--            </tbody>-->
+<!--        </table>-->
+<!--    </div>-->
+
+    <input type="submit" value="Create"/>
+</form>
+</body>
+</html>

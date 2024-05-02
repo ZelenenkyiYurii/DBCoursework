@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="/styles.css">
+
+<!--    <script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>-->
+</head>
+<body>
+<div class="sidebar">
+    <h2>Admin Panel</h2>
+    <ul>
+        <li><a href="#" onclick="openTab('tab1')" id="tab1Link" class="tab-link">Students</a></li>
+        <li><a href="#" onclick="openTab('tab2')" id="tab2Link" class="tab-link">Instructors</a></li>
+        <li><a href="#" onclick="openTab('tab3')" id="tab3Link" class="tab-link">Courses</a></li>
+        <li><a href="#" onclick="openTab('tab4')" id="tab4Link" class="tab-link">Enrollments</a></li>
+        <li><a href="#" onclick="openTab('tab5')" id="tab5Link" class="tab-link">Practical Lessons</a></li>
+        <li><a href="#" onclick="openTab('tab6')" id="tab6Link" class="tab-link">Theoretical Lessons</a></li>
+        <li><a href="#" onclick="openTab('tab7')" id="tab7Link" class="tab-link">Statistic</a></li>
+    </ul>
+</div>
+
+<div class="content">
+    <div id="tab1" class="tab-content active">
+        <h2>Students</h2>
+        <a th:href="@{/students/new}">Add new student</a>
+        <table class="sortable">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>FirstName</th>
+                <th>LastName</th>
+                <th>Email</th>
+                <th>Date</th>
+                <th>Phone</th>
+                <th>Edit</th>
+                <th>Delete</th>
+                <!-- Add more table headers if needed -->
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="student : ${students}">
+                <td th:text="${student.getId()}"></td>
+                <td th:text="${student.firstName}"></td>
+                <td th:text="${student.lastName}"></td>
+                <td th:text="${student.email}"></td>
+                <td th:text="${student.dateOfBirth}"></td>
+                <td th:text="${student.phoneNumber}"></td>
+                <td>
+                    <a th:href="@{/students/{id}/edit(id=${student.getId()})}">Edit</a>
+                </td>
+                <td>
+                    <form th:method="DELETE" th:action="@{/students/{id}(id=${student.getId()})}">
+                        <input type="submit"  VALUE="Delete">
+                    </form>
+                </td>
+                <!-- Add more table cells if needed -->
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div id="tab2" class="tab-content">
+        <h2>Instructors</h2>
+        <a th:href="@{/instructors/new}">Add new instructor</a>
+        <table class="sortable">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>FirstName</th>
+                <th>LastName</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Edit</th>
+                <th>Delete</th>
+                <!-- Add more table headers if needed -->
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="instructor : ${instructors}">
+                <td th:text="${instructor.getId()}"></td>
+                <td th:text="${instructor.firstName}"></td>
+                <td th:text="${instructor.lastName}"></td>
+                <td th:text="${instructor.email}"></td>
+                <td th:text="${instructor.phoneNumber}"></td>
+                <td>
+                    <a th:href="@{/instructors/{id}/edit(id=${instructor.getId()})}">Edit</a>
+                </td>
+                <td>
+                    <form th:method="DELETE" th:action="@{/instructor/{id}(id=${instructor.getId()})}">
+                        <input type="submit"  VALUE="Delete">
+                    </form>
+                </td>
+                <!-- Add more table cells if needed -->
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div id="tab3" class="tab-content">
+        <h2>Courses</h2>
+        <br>
+        <table >
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Course name</th>
+                <th>Category</th>
+                <th>Course type</th>
+                <th>Duration(hours)</th>
+                <th>Price</th>
+
+
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="cours : ${courses}">
+                <td th:text="${cours.getId()}"></td>
+                <td th:text="${cours.getCourseName()}"></td>
+                <td th:text="${cours.getCategory().getCategoryName()}"></td>
+                <td th:text="${cours.getCourseType().toUpperCase().toString()}"></td>
+                <td th:text="${cours.getDurationHours()}"></td>
+                <td th:text="${cours.getPrice()}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div id="tab4" class="tab-content">
+        <h2>Enrollments</h2>
+        <a th:href="@{/enrollments/new}">Add new enrollment</a>
+        <table >
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Student_ID</th>
+                <th>Course_ID</th>
+                <th>Group_ID</th>
+                <th>Date</th>
+<!--                <th>Edit</th>-->
+                <th>Delete</th>
+                <!-- Add more table headers if needed -->
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="enrollment : ${enrollments}">
+                <td th:text="${enrollment.getId()}"></td>
+                <td th:text="${enrollment.getStudent().getFirstName()+' '+enrollment.getStudent().getLastName()}"></td>
+                <td th:text="${enrollment.getCourse().getCourseName()}"></td>
+                <td th:if="${enrollment.getCourse().getCourseType() == 'theoretical'}" th:text="${enrollment.getGroup().getId()?: 'No group'} "></td>
+                <td th:if="${enrollment.getCourse().getCourseType() != 'theoretical'}">-</td>
+                <td th:text="${#dates.format(enrollment.getEnrollmentDate(), 'yyyy-MM-dd')}"></td>
+<!--                <td>-->
+<!--                    <a th:href="@{/enrollments/{id}/edit(id=${enrollment.getId()})}">Edit</a>-->
+<!--                </td>-->
+                <td>
+                    <form th:method="DELETE" th:action="@{/enrollments/{id}(id=${enrollment.getId()})}">
+                        <input type="submit"  VALUE="Delete">
+                    </form>
+                </td>
+                <!-- Add more table cells if needed -->
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div id="tab5" class="tab-content">
+        <h2>Enrollments</h2>
+        <a th:href="@{/enrollments/new}">Add new enrollment</a>
+        <table >
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Student_ID</th>
+                <th>Course_ID</th>
+                <th>Group_ID</th>
+                <th>Date</th>
+                <!--                <th>Edit</th>-->
+                <th>Delete</th>
+                <!-- Add more table headers if needed -->
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="enrollment : ${enrollments}">
+                <td th:text="${enrollment.getId()}"></td>
+                <td th:text="${enrollment.getStudent().getFirstName()+' '+enrollment.getStudent().getLastName()}"></td>
+                <td th:text="${enrollment.getCourse().getCourseName()}"></td>
+                <td th:if="${enrollment.getCourse().getCourseType() == 'theoretical'}" th:text="${enrollment.getGroup().getId()?: 'No group'} "></td>
+                <td th:if="${enrollment.getCourse().getCourseType() != 'theoretical'}">-</td>
+                <td th:text="${#dates.format(enrollment.getEnrollmentDate(), 'yyyy-MM-dd')}"></td>
+                <!--                <td>-->
+                <!--                    <a th:href="@{/enrollments/{id}/edit(id=${enrollment.getId()})}">Edit</a>-->
+                <!--                </td>-->
+                <td>
+                    <form th:method="DELETE" th:action="@{/enrollments/{id}(id=${enrollment.getId()})}">
+                        <input type="submit"  VALUE="Delete">
+                    </form>
+                </td>
+                <!-- Add more table cells if needed -->
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div id="tab6" class="tab-content">
+        <h2>Enrollments</h2>
+        <a th:href="@{/enrollments/new}">Add new enrollment</a>
+        <table >
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Student_ID</th>
+                <th>Course_ID</th>
+                <th>Group_ID</th>
+                <th>Date</th>
+                <!--                <th>Edit</th>-->
+                <th>Delete</th>
+                <!-- Add more table headers if needed -->
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="enrollment : ${enrollments}">
+                <td th:text="${enrollment.getId()}"></td>
+                <td th:text="${enrollment.getStudent().getFirstName()+' '+enrollment.getStudent().getLastName()}"></td>
+                <td th:text="${enrollment.getCourse().getCourseName()}"></td>
+                <td th:if="${enrollment.getCourse().getCourseType() == 'theoretical'}" th:text="${enrollment.getGroup().getId()?: 'No group'} "></td>
+                <td th:if="${enrollment.getCourse().getCourseType() != 'theoretical'}">-</td>
+                <td th:text="${#dates.format(enrollment.getEnrollmentDate(), 'yyyy-MM-dd')}"></td>
+                <!--                <td>-->
+                <!--                    <a th:href="@{/enrollments/{id}/edit(id=${enrollment.getId()})}">Edit</a>-->
+                <!--                </td>-->
+                <td>
+                    <form th:method="DELETE" th:action="@{/enrollments/{id}(id=${enrollment.getId()})}">
+                        <input type="submit"  VALUE="Delete">
+                    </form>
+                </td>
+                <!-- Add more table cells if needed -->
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div id="tab7" class="tab-content">
+        <h2>Statistic</h2>
+
+
+    </div>
+
+</div>
+<script >
+    function openTab(tabName) {
+        var i, tabContent;
+
+        // Закрити всі вкладки
+        tabContent = document.getElementsByClassName("tab-content");
+        for (i = 0; i < tabContent.length; i++) {
+            tabContent[i].classList.remove("active");
+        }
+
+        // Показати вибрану вкладку
+        document.getElementById(tabName).classList.add("active");
+
+
+        tabLinks = document.getElementsByClassName("tab-link");
+        for (i = 0; i < tabLinks.length; i++) {
+            tabLinks[i].classList.remove("active");
+        }
+        document.getElementById(tabName + "Link").classList.add("active");
+    }
+</script>
+
+</body>
+</html>

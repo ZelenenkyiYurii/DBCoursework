@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Графік</title>
+    <!-- Підключення Chart.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+</head>
+<body>
+<h1>Графік</h1>
+<!-- Вставка місця для відображення графіку -->
+<canvas id="myChart"></canvas>
+
+<!-- JavaScript для побудови графіку -->
+<script th:inline="javascript">
+    // Отримання даних з моделі
+    var data = /*[[${data}]]*/ [];
+
+    // Побудова графіку
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['A', 'B', 'C', 'D', 'E'],
+            datasets: [{
+                label: 'Дані',
+                data: data,
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
+</body>
+</html>

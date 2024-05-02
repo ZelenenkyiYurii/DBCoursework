@@ -1,0 +1,60 @@
+
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #fff; /* Set background color */
+    color: #354f52; /* Set text color */
+    margin: 0;
+    padding: 0;
+}
+
+h2 {
+    color: #354f52; /* Set heading color */
+}
+
+a {
+    color: #354f52; /* Set link color */
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #354f52; /* Set table border color */
+}
+
+th, td {
+    border: 1px solid #354f52; /* Set cell border color */
+    padding: 8px;
+    text-align: left;
+}
+
+thead {
+    background-color: #354f52; /* Set table header background color */
+    color: #fff; /* Set table header text color */
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f2f2f2; /* Set alternate row color */
+}
+
+input[type="datetime-local"] {
+    border: 1px solid #354f52; /* Set input border color */
+    padding: 5px;
+}
+
+input[type="submit"] {
+    background-color: #354f52; /* Set submit button background color */
+    color: #fff; /* Set submit button text color */
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover {
+    background-color: #2b3e41; /* Darken button color on hover */
+}

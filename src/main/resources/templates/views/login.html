@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thumeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/new_edit_login.css">
+</head>
+<body>
+<div>
+    <form th:action="@{/}" th:method="post">
+        <label for="email"> Email: </label>
+        <input type="text" id="email" name="email">
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password">
+        <input type="submit" value="Login">
+    </form>
+</div>
+</body>
+</html>
